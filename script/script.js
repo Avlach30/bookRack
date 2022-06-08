@@ -1,6 +1,6 @@
 const books = [];
-const RENDER_EVENT = 'render-todo';
-const SAVED_EVENT = 'saved-todo';
+const RENDER_EVENT = 'render-book';
+const SAVED_EVENT = 'saved-book';
 const LOCAL_STORAGE_KEY = 'books';
 
 const checkStorageExist = () => {
@@ -31,8 +31,8 @@ const loadData = () => {
   let data = JSON.parse(serializedBooksData);
 
   if (data !== null) {
-    for (let todo of data) {
-      books.push(todo);
+    for (let book of data) {
+      books.push(book);
     }
   }
 
