@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style/style.css">
+  <script src="./script/script.js" async></script>
+  <title>Bookrack</title>
+</head>
+<body>
+  <header>
+    <h1>BookRack</h1>
+    <p>Just a simple book's catalog management apps</p>
+  </header>
+
+  <main>
+    <section class="bg-white shadow" id="form">
+      <h2 class="header text-center">Add new book form</h2>
+      <form action="#" class="add" id="form">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" name="title" id="title" value="" required>
+        </div>
+        <div class="form-group">
+          <label for="author">Author</label>
+          <input type="text" name="author" id="author" value="" required>
+        </div>
+        <div class="form-group">
+          <label for="year">Year release</label>
+          <input type="number" name="year" id="year" value="" required>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" name="description" id="description" placeholder="Write a simple description" value="" required>
+        </div>
+        <input type="submit" value="Submit" name="Submit" class="btn-submit">
+      </form>
+    </section>
+
+    <section id="details">
+      <h2 class="header">Book details</h2>
+    </section>
+
+    <section id="unfinishedReads">
+      <h2 class="header">List of unfinished read books catalog</h2>
+      <div class="catalogs" id="books"></div>
+    </section>
+
+    <section id="finishedReads">
+      <h2 class="header">List of finished read books catalog</h2>
+      <div class="catalogs" id="finishedReads"></div>
+    </section>
+  </main>
+
+  <footer>
+    <h3>BookRack</h3>
+    <p>2022 copyright</p>
+  </footer>
+</body>
+</html>
