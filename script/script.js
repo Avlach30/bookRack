@@ -53,6 +53,42 @@ const createNewBook = () => {
   saveData();
 };
 
+const findBookById = (bookId) => {
+  for (let book of books) {
+    if (book.id === bookId) return book;
+  }
+
+  return null;
+};
+
+const getDetailBook = (bookId) => {
+  const detailContainer = document.getElementById('details');
+  const detail = document.createElement('ul');
+  detail.classList.add('details');
+  const listTitle = document.createElement('li');
+  const listAuthor = document.createElement('li');
+  const listYear = document.createElement('li');
+  const listDescription = document.createElement('li');
+
+  const book = findBookById(bookId);
+
+  if (!book) return;
+
+  detailContainer.innerHTML = '<h2 class="header">Book details</h2>';
+
+  listTitle.innerText = `Title: ${book.title}`;
+  listAuthor.innerText = `Author: ${book.author}`;
+  listYear.innerText = `Year Release: ${book.year}`;
+  listDescription.innerText = `Description: ${book.description}`;
+
+  console.log(book);
+
+  detail.append(listTitle, listAuthor, listYear, listDescription);
+  detailContainer.append(detail);
+
+  document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
 const renderBookItem = (book) => {
   const table = document.createElement('table');
 
@@ -80,6 +116,7 @@ const renderBookItem = (book) => {
     const detailBtn = document.createElement('button');
     detailBtn.innerText = 'details';
     detailBtn.classList.add('action-btn', 'detail-button');
+    detailBtn.addEventListener('click', () => { getDetailBook(book.id) });
 
     const undoBtn = document.createElement('button');
     undoBtn.innerText = 'undo';
@@ -97,6 +134,7 @@ const renderBookItem = (book) => {
     const detailBtn = document.createElement('button');
     detailBtn.innerText = 'details';
     detailBtn.classList.add('action-btn', 'detail-button');
+    detailBtn.addEventListener('click', () => { getDetailBook(book.id) });
 
     const updateBtn = document.createElement('button');
     updateBtn.innerText = 'update';
