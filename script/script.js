@@ -14,7 +14,7 @@ const checkStorageExist = () => {
 
 const generateId = () => new Date().getTime().toString();
 
-const generateBookObj = (id, title, author, year, description, isFinishedRead) => { 
+const generateBookObj = (id, title, author, year, description, isFinishedRead) => {
   return { id, title, author, year, description, isFinishedRead };
 };
 
@@ -39,18 +39,35 @@ const loadData = () => {
   document.dispatchEvent(new Event(RENDER_EVENT));
 };
 
-const createNewBook = () => {
+const processForm = () => {
   const title = document.getElementById('title').value;
   const author = document.getElementById('author').value;
   const year = document.getElementById('year').value;
   const description = document.getElementById('description').value;
 
-  const id = generateId();
-  const book = generateBookObj(id, title, author, year, description, false);
-  books.push(book);
+  const bookIdInput = document.getElementById('bookId');
 
-  document.dispatchEvent(new Event(RENDER_EVENT));
-  saveData();
+  if (bookIdInput == null) {
+    const id = generateId();
+    const book = generateBookObj(id, title, author, year, description, false);
+    books.push(book);
+  
+    document.dispatchEvent(new Event(RENDER_EVENT));
+    return saveData();
+  } else {
+    const bookId = document.getElementById('bookId').value;
+    const book = findBookById(bookId);
+  
+    if (!book) return;
+  
+    book.title = title;
+    book.author = author;
+    book.year = year;
+    book.description = description;
+
+    document.dispatchEvent(new Event(RENDER_EVENT));
+    return saveData();
+  }
 };
 
 const findBookById = (bookId) => {
@@ -88,6 +105,41 @@ const getDetailBook = (bookId) => {
 
   document.dispatchEvent(new Event(RENDER_EVENT));
 }
+
+const getUpdateBook = (bookId) => {
+  const form = document.getElementById('form');
+  const formTitle = document.getElementById('form-title');
+
+  form.setAttribute('class', 'update-form');
+  formTitle.innerText = 'Update book form'
+
+  const book = findBookById(bookId);
+
+  if (!book) return;
+
+  const bookIdInput = document.getElementById('bookId');
+  if (bookIdInput == null) {
+    const addIdInput = document.createElement('input');
+    addIdInput.setAttribute('type', 'hidden');
+    addIdInput.setAttribute('id', 'bookId');
+    addIdInput.setAttribute('value', book.id);
+
+    form.append(addIdInput);
+  } else {
+    bookIdInput.setAttribute('value', book.id);
+  }
+
+  const title = document.getElementById('title');
+  title.value = book.title;
+  const author = document.getElementById('author');
+  author.value = book.author;
+  const year = document.getElementById('year');
+  year.value = book.year;
+  const description = document.getElementById('description');
+  description.value = book.description;
+
+  return form;
+};
 
 const renderBookItem = (book) => {
   const table = document.createElement('table');
@@ -139,6 +191,7 @@ const renderBookItem = (book) => {
     const updateBtn = document.createElement('button');
     updateBtn.innerText = 'update';
     updateBtn.classList.add('action-btn', 'update-button');
+    updateBtn.addEventListener('click', () => { getUpdateBook(book.id) });
 
     const finishBtn = document.createElement('button');
     finishBtn.innerText = 'finish';
@@ -152,18 +205,13 @@ const renderBookItem = (book) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('form');
-  const formClassValue = form.getAttribute('class');
-
-  if (formClassValue == 'add-form') {
-    form.addEventListener('submit', (ev) => {
-      ev.preventDefault();
-      createNewBook();
-    })
-  }
-
   if (checkStorageExist()) loadData();
+});
 
+const form = document.getElementById('form');
+form.addEventListener('submit',  (ev) => {
+  ev.preventDefault();
+  processForm();
 });
 
 document.addEventListener(RENDER_EVENT, () => {
