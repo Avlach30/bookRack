@@ -183,6 +183,7 @@ const renderBookItem = (book) => {
     const undoBtn = document.createElement('button');
     undoBtn.innerText = 'undo';
     undoBtn.classList.add('action-btn', 'undo-button');
+    undoBtn.addEventListener('click', () => { updateBookStatus(book.id) });
 
     const deleteBtn = document.createElement('button');
     deleteBtn.innerText = 'delete';
@@ -226,10 +227,12 @@ form.addEventListener('submit',  (ev) => {
 });
 
 document.addEventListener(RENDER_EVENT, () => {
-  const unfinishedReadBooks = document.getElementById('books');
+  const unfinishedReadBooks = document.getElementById('unfinishedReadCatalogs');
+  console.log(unfinishedReadBooks);
   unfinishedReadBooks.innerHTML = '';
 
-  const finishedReadBooks = document.getElementById('finishedReads');
+  const finishedReadBooks = document.getElementById('finishedReadCatalogs');
+  console.log(finishedReadBooks);
   finishedReadBooks.innerHTML = '';
 
   for (let book of books) {
