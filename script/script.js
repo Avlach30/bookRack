@@ -141,6 +141,16 @@ const getUpdateBook = (bookId) => {
   return form;
 };
 
+const updateBookStatus = (bookId) => {
+  const book = findBookById(bookId);
+  if (!book) return;
+
+  !book.isFinishedRead ? book.isFinishedRead = true : book.isFinishedRead = false;
+
+  document.dispatchEvent(new Event(RENDER_EVENT));
+  saveData();
+}
+
 const renderBookItem = (book) => {
   const table = document.createElement('table');
 
@@ -196,6 +206,7 @@ const renderBookItem = (book) => {
     const finishBtn = document.createElement('button');
     finishBtn.innerText = 'finish';
     finishBtn.classList.add('action-btn', 'finish-button');
+    finishBtn.addEventListener('click', () => { updateBookStatus(book.id) });
 
     btnActionRowData.append(detailBtn, updateBtn, finishBtn);
     table.append(btnActionRowData);
