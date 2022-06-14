@@ -228,17 +228,17 @@ form.addEventListener('submit',  (ev) => {
 
 document.addEventListener(RENDER_EVENT, () => {
   const unfinishedReadBooks = document.getElementById('unfinishedReadCatalogs');
-  console.log(unfinishedReadBooks);
+  // console.log(unfinishedReadBooks);
   unfinishedReadBooks.innerHTML = '';
 
   const finishedReadBooks = document.getElementById('finishedReadCatalogs');
-  console.log(finishedReadBooks);
+  // console.log(finishedReadBooks);
   finishedReadBooks.innerHTML = '';
 
   for (let book of books) {
     const bookItemElement = renderBookItem(book);
 
-    !bookItemElement.isFinishedRead ? unfinishedReadBooks.append(bookItemElement) : finishedReadBooks.append(bookItemElement);
+    !book.isFinishedRead ? unfinishedReadBooks.append(bookItemElement) : finishedReadBooks.append(bookItemElement);
   }
 });
 
