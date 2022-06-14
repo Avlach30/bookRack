@@ -14,8 +14,8 @@ const checkStorageExist = () => {
 
 const generateId = () => new Date().getTime().toString();
 
-const generateBookObj = (id, title, author, year, description, isFinishedRead) => {
-  return { id, title, author, year, description, isFinishedRead };
+const generateBookObj = (id, title, author, year, description, isComplete) => {
+  return { id, title, author, year, description, isComplete };
 };
 
 const saveData = () => {
@@ -145,7 +145,7 @@ const updateBookStatus = (bookId) => {
   const book = findBookById(bookId);
   if (!book) return;
 
-  !book.isFinishedRead ? book.isFinishedRead = true : book.isFinishedRead = false;
+  !book.isComplete ? book.isComplete = true : book.isComplete = false;
 
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
@@ -172,7 +172,7 @@ const renderBookItem = (book) => {
   container.setAttribute('id', `book-${book.id}`);
 
 
-  if (book.isFinishedRead) {
+  if (book.isComplete) {
     const btnActionRowData = document.createElement('td');
 
     const detailBtn = document.createElement('button');
@@ -238,7 +238,7 @@ document.addEventListener(RENDER_EVENT, () => {
   for (let book of books) {
     const bookItemElement = renderBookItem(book);
 
-    !book.isFinishedRead ? unfinishedReadBooks.append(bookItemElement) : finishedReadBooks.append(bookItemElement);
+    !book.isComplete ? unfinishedReadBooks.append(bookItemElement) : finishedReadBooks.append(bookItemElement);
   }
 });
 
