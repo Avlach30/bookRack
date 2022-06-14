@@ -151,6 +151,24 @@ const updateBookStatus = (bookId) => {
   saveData();
 }
 
+const deleteBook = (bookId) => {
+
+  const deleteBook = window.confirm('Are you sure want to delete this book?');
+
+  if (deleteBook) {
+    const bookIndex = books.findIndex(book => book.id == bookId);
+    if (bookIndex == -1) return;
+
+    books.splice(bookIndex, 1);
+    
+  } else {
+    return;
+  }
+
+  document.dispatchEvent(new Event(RENDER_EVENT));
+  saveData();
+}
+
 const renderBookItem = (book) => {
   const table = document.createElement('table');
 
@@ -185,6 +203,7 @@ const renderBookItem = (book) => {
     const deleteBtn = document.createElement('button');
     deleteBtn.innerText = 'delete';
     deleteBtn.classList.add('action-btn', 'delete-button');
+    deleteBtn.addEventListener('click', () => { deleteBook(book.id) });
 
     btnActionRowData.append(detailBtn, undoBtn, deleteBtn);
     table.append(btnActionRowData);
@@ -209,6 +228,7 @@ const renderBookItem = (book) => {
     const deleteBtn = document.createElement('button');
     deleteBtn.innerText = 'delete';
     deleteBtn.classList.add('action-btn', 'delete-button');
+    deleteBtn.addEventListener('click', () => { deleteBook(book.id) });
 
     btnActionRowData.append(detailBtn, updateBtn, finishBtn, deleteBtn);
     table.append(btnActionRowData);
