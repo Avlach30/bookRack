@@ -154,17 +154,14 @@ const updateBookStatus = (bookId) => {
 const renderBookItem = (book) => {
   const table = document.createElement('table');
 
-  const titleRowData = document.createElement('td');
+  const rowData = document.createElement('td');
   const title = document.createElement('h3');
   title.innerText = book.title;
-  titleRowData.append(title);
-  table.append(titleRowData);
-
-  const yearRowData = document.createElement('td');
-  const year = document.createElement('h3');
+  const year = document.createElement('p');
   year.innerText = book.year;
-  yearRowData.append(year);
-  table.appendChild(yearRowData);
+
+  rowData.append(title, year);
+  table.append(rowData);
 
   const container = document.createElement('div');
   container.classList.add('item', 'shadow');
