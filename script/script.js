@@ -209,7 +209,11 @@ const renderBookItem = (book) => {
     finishBtn.classList.add('action-btn', 'finish-button');
     finishBtn.addEventListener('click', () => { updateBookStatus(book.id) });
 
-    btnActionRowData.append(detailBtn, updateBtn, finishBtn);
+    const deleteBtn = document.createElement('button');
+    deleteBtn.innerText = 'delete';
+    deleteBtn.classList.add('action-btn', 'delete-button');
+
+    btnActionRowData.append(detailBtn, updateBtn, finishBtn, deleteBtn);
     table.append(btnActionRowData);
   }
 
